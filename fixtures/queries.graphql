@@ -1,0 +1,533 @@
+mutation createSignup($input: SignupInput!) {
+  createSignup(input: $input) {
+    id
+    __typename
+  }
+}
+mutation createWizard($input: WizardInput!) {
+  createWizard(input: $input) {
+    id
+    templateId
+    templateName
+    templateKind
+    state
+    name
+    createdAt
+    errors
+    tokensNeeded
+    entries
+    __typename
+  }
+}
+mutation createAttestation($input: AttestationInput!) {
+  createAttestation(input: $input) {
+    id
+    personId
+    orgId
+    markers
+    openUntil
+    state
+    parkingReason
+    doneDocuments
+    parkedDocuments
+    processingDocuments
+    totalDocuments
+    tokensCost
+    tokensPaid
+    tokensOwed
+    buyTokensUrl
+    acceptTycUrl
+    lastDocDate
+    emailAdminAccessUrlTo
+    adminAccessUrl
+    createdAt
+    __typename
+  }
+}
+mutation signingIterator($id: Int!, $entryId: Int, $signature: String) {
+  signingIterator(id: $id, entryId: $entryId, signature: $signature) {
+    id
+    requestId
+    requestName
+    rowNumber
+    state
+    createdAt
+    params
+    errors
+    documentId
+    storyId
+    hasEmailCallback
+    emailCallbackSentAt
+    payload
+    __typename
+  }
+}
+mutation createKycRequest($input: KycRequestInput!) {
+  createKycRequest(input: $input) {
+    id
+    personId
+    orgId
+    createdAt
+    state
+    name
+    lastName
+    idNumber
+    idType
+    birthdate
+    nationality
+    country
+    jobTitle
+    legalEntityName
+    legalEntityCountry
+    legalEntityRegistration
+    legalEntityTaxId
+    __typename
+  }
+}
+mutation createEmailAddress($input: EmailAddressInput!) {
+  createEmailAddress(input: $input) {
+    id
+    personId
+    address
+    verifiedAt
+    keepPrivate
+    __typename
+  }
+}
+mutation createInvoiceLink($input: InvoiceLinkInput!) {
+  createInvoiceLink(input: $input) {
+    id
+    minimumSuggested
+    pricePerToken
+    invoiceUrl
+    __typename
+  }
+}
+mutation updateDownloadProofLink($input: DownloadProofLinkInput!) {
+  updateDownloadProofLink(input: $input) {
+    id
+    validUntil
+    pendingDocCount
+    lastDocDate
+    publicCertificateUrl
+    publicCertificateIsActive
+    shareOnSocialNetworksCallToAction
+    __typename
+  }
+}
+mutation deleteDownloadProofLink {
+  deleteDownloadProofLink {
+    id
+    validUntil
+    pendingDocCount
+    lastDocDate
+    publicCertificateUrl
+    publicCertificateIsActive
+    shareOnSocialNetworksCallToAction
+    __typename
+  }
+}
+mutation createEmailAddressVerification {
+  createEmailAddressVerification {
+    id
+    __typename
+  }
+}
+mutation updateRequest($id: Int!) {
+  updateRequest(id: $id) {
+    id
+    templateId
+    templateName
+    templateKind
+    state
+    name
+    createdAt
+    errors
+    tokensNeeded
+    entries
+    __typename
+  }
+}
+query Entry($id: Int!) {
+  Entry(id: $id) {
+    id
+    requestId
+    requestName
+    rowNumber
+    state
+    createdAt
+    params
+    errors
+    documentId
+    storyId
+    hasEmailCallback
+    emailCallbackSentAt
+    payload
+    __typename
+  }
+}
+query allEntries($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EntryFilter) {
+  allEntries(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    id
+    requestId
+    requestName
+    rowNumber
+    state
+    createdAt
+    params
+    errors
+    documentId
+    storyId
+    hasEmailCallback
+    emailCallbackSentAt
+    payload
+    __typename
+  }
+}
+query _allEntriesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EntryFilter) {
+  _allEntriesMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    count
+    __typename
+  }
+}
+query Request($id: Int!) {
+  Request(id: $id) {
+    id
+    templateId
+    templateName
+    templateKind
+    state
+    name
+    createdAt
+    errors
+    tokensNeeded
+    entries
+    __typename
+  }
+}
+query allRequests($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: RequestFilter) {
+  allRequests(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    id
+    templateId
+    templateName
+    templateKind
+    state
+    name
+    createdAt
+    errors
+    tokensNeeded
+    entries
+    __typename
+  }
+}
+query _allRequestsMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: RequestFilter) {
+  _allRequestsMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    count
+    __typename
+  }
+}
+query Template($id: Int!) {
+  Template(id: $id) {
+    id
+    name
+    kind
+    createdAt
+    schema
+    customMessage
+    __typename
+  }
+}
+query allTemplates($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: TemplateFilter) {
+  allTemplates(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    id
+    name
+    kind
+    createdAt
+    schema
+    customMessage
+    __typename
+  }
+}
+query _allTemplatesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: TemplateFilter) {
+  _allTemplatesMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    count
+    __typename
+  }
+}
+query Story($id: Int!) {
+  Story(id: $id) {
+    id
+    orgId
+    openUntil
+    privateMarkers
+    source
+    requestId
+    requestName
+    totalDocumentsCount
+    publishedDocumentsCount
+    hasAccepted
+    isTermsAccepted
+    downloadProofLink
+    __typename
+  }
+}
+query allStories($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: StoryFilter) {
+  allStories(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    id
+    orgId
+    openUntil
+    privateMarkers
+    source
+    requestId
+    requestName
+    totalDocumentsCount
+    publishedDocumentsCount
+    hasAccepted
+    isTermsAccepted
+    downloadProofLink
+    __typename
+  }
+}
+query _allStoriesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: StoryFilter) {
+  _allStoriesMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    count
+    __typename
+  }
+}
+query Pubkey($id: String!) {
+  Pubkey(id: $id) {
+    id
+    personId
+    orgId
+    __typename
+  }
+}
+query allPubkeys($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: PubkeyFilter) {
+  allPubkeys(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    id
+    personId
+    orgId
+    __typename
+  }
+}
+query _allPubkeysMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: PubkeyFilter) {
+  _allPubkeysMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    count
+    __typename
+  }
+}
+query KycRequest($id: Int!) {
+  KycRequest(id: $id) {
+    id
+    personId
+    orgId
+    createdAt
+    state
+    name
+    lastName
+    idNumber
+    idType
+    birthdate
+    nationality
+    country
+    jobTitle
+    legalEntityName
+    legalEntityCountry
+    legalEntityRegistration
+    legalEntityTaxId
+    __typename
+  }
+}
+query allKycRequests($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: KycRequestFilter) {
+  allKycRequests(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    id
+    personId
+    orgId
+    createdAt
+    state
+    name
+    lastName
+    idNumber
+    idType
+    birthdate
+    nationality
+    country
+    jobTitle
+    legalEntityName
+    legalEntityCountry
+    legalEntityRegistration
+    legalEntityTaxId
+    __typename
+  }
+}
+query _allKycRequestsMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: KycRequestFilter) {
+  _allKycRequestsMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    count
+    __typename
+  }
+}
+query EmailAddress($id: Int!) {
+  EmailAddress(id: $id) {
+    id
+    personId
+    address
+    verifiedAt
+    keepPrivate
+    __typename
+  }
+}
+query allEmailAddresses($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EmailAddressFilter) {
+  allEmailAddresses(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    id
+    personId
+    address
+    verifiedAt
+    keepPrivate
+    __typename
+  }
+}
+query _allEmailAddressesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EmailAddressFilter) {
+  _allEmailAddressesMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    count
+    __typename
+  }
+}
+query Attestation($id: Int!) {
+  Attestation(id: $id) {
+    id
+    personId
+    orgId
+    markers
+    openUntil
+    state
+    parkingReason
+    doneDocuments
+    parkedDocuments
+    processingDocuments
+    totalDocuments
+    tokensCost
+    tokensPaid
+    tokensOwed
+    buyTokensUrl
+    acceptTycUrl
+    lastDocDate
+    emailAdminAccessUrlTo
+    adminAccessUrl
+    createdAt
+    __typename
+  }
+}
+query allAttestations($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: AttestationFilter) {
+  allAttestations(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    id
+    personId
+    orgId
+    markers
+    openUntil
+    state
+    parkingReason
+    doneDocuments
+    parkedDocuments
+    processingDocuments
+    totalDocuments
+    tokensCost
+    tokensPaid
+    tokensOwed
+    buyTokensUrl
+    acceptTycUrl
+    lastDocDate
+    emailAdminAccessUrlTo
+    adminAccessUrl
+    createdAt
+    __typename
+  }
+}
+query _allAttestationsMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: AttestationFilter) {
+  _allAttestationsMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
+    count
+    __typename
+  }
+}
+query Preview($id: Int!) {
+  Preview(id: $id) {
+    id
+    html
+    __typename
+  }
+}
+query AccountState($id: Int!) {
+  AccountState(id: $id) {
+    id
+    missing
+    tokenBalance
+    pricePerToken
+    maxMonthlyGift
+    monthlyGiftRemainder
+    parkedCount
+    invoices
+    pendingTycUrl
+    pendingInvoiceLinkUrl
+    __typename
+  }
+}
+query EndorsementManifest($id: Int!) {
+  EndorsementManifest(id: $id) {
+    id
+    text
+    websites
+    kyc
+    telegram
+    email
+    canSendEmail
+    __typename
+  }
+}
+query EmailAddressVerification($id: Int!) {
+  EmailAddressVerification(id: $id) {
+    id
+    __typename
+  }
+}
+query InvoiceLink($id: String!) {
+  InvoiceLink(id: $id) {
+    id
+    minimumSuggested
+    pricePerToken
+    invoiceUrl
+    __typename
+  }
+}
+query DownloadProofLink($id: String!) {
+  DownloadProofLink(id: $id) {
+    id
+    validUntil
+    pendingDocCount
+    lastDocDate
+    publicCertificateUrl
+    publicCertificateIsActive
+    shareOnSocialNetworksCallToAction
+    __typename
+  }
+}
+query Proof($id: String!) {
+  Proof(id: $id) {
+    id
+    html
+    __typename
+  }
+}
+query IssuanceExport($id: Int!) {
+  IssuanceExport(id: $id) {
+    id
+    csv
+    __typename
+  }
+}
+query AttestationHtmlExport($id: Int!) {
+  AttestationHtmlExport(id: $id) {
+    id
+    attestation
+    verifiableHtml
+    __typename
+  }
+}

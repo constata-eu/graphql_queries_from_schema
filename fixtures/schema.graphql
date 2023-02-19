@@ -1,0 +1,453 @@
+"An email address"
+type EmailAddressVerification {
+  id: Int!
+}
+
+"A full kyc request"
+input KycRequestEvidenceInput {
+  filename: String!
+  payload: String!
+}
+
+input RequestFilter {
+  ids: [Int!]
+  idEq: Int
+  templateIdEq: Int
+  stateEq: String
+  nameLike: String
+}
+
+enum DocumentSource {
+  EMAIL
+  API
+  TELEGRAM
+  INTERNAL
+}
+
+"A full kyc request"
+input KycRequestInput {
+  email: String!
+  keepPrivate: Boolean!
+  name: String!
+  lastName: String!
+  idNumber: String
+  idType: String
+  birthdate: DateTime
+  nationality: String
+  country: String
+  jobTitle: String
+  legalEntityName: String
+  legalEntityCountry: String
+  legalEntityRegistration: String
+  legalEntityTaxId: String
+  evidence: [KycRequestEvidenceInput!]!
+}
+
+"The customer identity verification endorsement"
+type KycEndorsementManifest {
+  name: String
+  lastName: String
+  idNumber: String
+  idType: String
+  birthdate: DateTime
+  nationality: String
+  country: String
+  jobTitle: String
+  legalEntityName: String
+  legalEntityCountry: String
+  legalEntityRegistration: String
+  legalEntityTaxId: String
+  updatedAt: DateTime!
+}
+
+"An pubkey on certos"
+type Pubkey {
+  id: String!
+  personId: Int!
+  orgId: Int!
+}
+
+"A story"
+type Story {
+  id: Int!
+  orgId: Int!
+  openUntil: DateTime
+  privateMarkers: String!
+  source: DocumentSource!
+  requestId: Int
+  requestName: String
+  totalDocumentsCount: Int!
+  publishedDocumentsCount: Int!
+  hasAccepted: Boolean!
+  isTermsAccepted: Boolean!
+  downloadProofLink: String
+}
+
+enum TemplateKind {
+  DIPLOMA
+  ATTENDANCE
+  INVITATION
+}
+
+"The customer account state"
+type AccountState {
+  id: Int!
+  missing: Int!
+  tokenBalance: Int!
+  pricePerToken: Int!
+  maxMonthlyGift: Int!
+  monthlyGiftRemainder: Int!
+  parkedCount: Int!
+  invoices: [Invoice!]!
+  pendingTycUrl: String
+  pendingInvoiceLinkUrl: String
+}
+
+"The customer telegram account endorsement"
+type EmailEndorsementManifest {
+  address: String!
+  keepPrivate: Boolean!
+}
+
+"An email address"
+type EmailAddress {
+  id: Int!
+  personId: Int!
+  address: String!
+  verifiedAt: DateTime
+  keepPrivate: Boolean!
+}
+
+"A person's signup"
+type Signup {
+  id: Int!
+}
+
+"The customer telegram account endorsement"
+type TelegramEndorsementManifest {
+  username: String
+  firstName: String!
+  lastName: String
+}
+
+input EntryFilter {
+  ids: [Int!]
+  idEq: Int
+  requestIdEq: Int
+  stateEq: String
+  documentIdEq: String
+  paramsLike: String
+}
+
+input KycRequestFilter {
+  ids: [Int!]
+  idEq: Int
+  stateEq: String
+}
+
+input StoryFilter {
+  ids: [Int!]
+  idEq: Int
+  personIdEq: Int
+  privateMarkersLike: String
+}
+
+"An invoice link"
+type InvoiceLink {
+  id: Int!
+  minimumSuggested: Int!
+  pricePerToken: Int!
+  invoiceUrl: String
+}
+
+type ListMetadata {
+  count: Int!
+}
+
+"An Attestation over several documents"
+type Attestation {
+  id: Int!
+  personId: Int!
+  orgId: Int!
+  markers: String!
+  openUntil: DateTime
+  state: String!
+  parkingReason: String
+  doneDocuments: Int!
+  parkedDocuments: Int!
+  processingDocuments: Int!
+  totalDocuments: Int!
+  tokensCost: Float!
+  tokensPaid: Float!
+  tokensOwed: Float!
+  buyTokensUrl: String
+  acceptTycUrl: String
+  lastDocDate: DateTime
+  emailAdminAccessUrlTo: [String!]!
+  adminAccessUrl: String
+  createdAt: DateTime!
+}
+
+"An request on certos"
+type Request {
+  id: Int!
+  templateId: Int!
+  templateName: String!
+  templateKind: TemplateKind!
+  state: String!
+  name: String!
+  createdAt: DateTime!
+  errors: String
+  tokensNeeded: Int
+  entries: [[String!]!]!
+}
+
+"An html preview of an entry's contents"
+type Preview {
+  id: Int!
+  html: String!
+}
+
+"A download proof link input"
+input DownloadProofLinkInput {
+  action: String!
+}
+
+"A Download Proof Link"
+type DownloadProofLink {
+  id: Int!
+  validUntil: DateTime
+  pendingDocCount: Int!
+  lastDocDate: DateTime
+  publicCertificateUrl: String!
+  publicCertificateIsActive: Boolean!
+  shareOnSocialNetworksCallToAction: String!
+}
+
+"An template on certos"
+type Template {
+  id: Int!
+  name: String!
+  kind: TemplateKind!
+  createdAt: DateTime!
+  schema: String!
+  customMessage: String
+}
+
+"""
+  Combined date and time (with time zone) in [RFC 3339][0] format.
+
+  Represents a description of an exact instant on the time-line (such as the
+  instant that a user account was created).
+
+  [`DateTime` scalar][1] compliant.
+
+  See also [`chrono::DateTime`][2] for details.
+
+  [0]: https://datatracker.ietf.org/doc/html/rfc3339#section-5
+  [1]: https://graphql-scalars.dev/docs/scalars/date-time
+  [2]: https://docs.rs/chrono/latest/chrono/struct.DateTime.html
+"""
+scalar DateTime
+
+"You can get an attestation as a verifiable HTML, embedding all documents and verifiable in any default browser."
+type AttestationHtmlExport {
+  id: Int!
+  attestation: Attestation!
+  verifiableHtml: String!
+}
+
+"The customer endorsements"
+type EndorsementManifest {
+  id: Int!
+  text: String
+  websites: [String!]!
+  kyc: KycEndorsementManifest
+  telegram: TelegramEndorsementManifest
+  email: EmailEndorsementManifest
+  canSendEmail: Boolean!
+}
+
+"An invoice link input"
+input InvoiceLinkInput {
+  paymentMethod: String!
+  tokens: Int!
+}
+
+"A Proof"
+type Proof {
+  id: Int!
+  html: String!
+}
+
+type Mutation {
+  createSignup(input: SignupInput!): Signup!
+  createWizard(input: WizardInput!): Request!
+  createAttestation(input: AttestationInput!): Attestation!
+  signingIterator(id: Int!, entryId: Int, signature: String): Entry
+  createKycRequest(input: KycRequestInput!): KycRequest!
+  createEmailAddress(input: EmailAddressInput!): EmailAddress!
+  createInvoiceLink(input: InvoiceLinkInput!): InvoiceLink!
+  updateDownloadProofLink(input: DownloadProofLinkInput!): DownloadProofLink!
+  deleteDownloadProofLink: DownloadProofLink!
+  createEmailAddressVerification: EmailAddressVerification!
+  updateRequest(id: Int!): Request!
+}
+
+"A SignUp form"
+input SignupInput {
+  email: String
+  keepPrivate: Boolean!
+}
+
+type Query {
+  apiVersion: String!
+  Entry(id: Int!): Entry!
+  allEntries(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: EntryFilter): [Entry!]!
+  _allEntriesMeta(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: EntryFilter): ListMetadata!
+  Request(id: Int!): Request!
+  allRequests(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: RequestFilter): [Request!]!
+  _allRequestsMeta(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: RequestFilter): ListMetadata!
+  Template(id: Int!): Template!
+  allTemplates(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: TemplateFilter): [Template!]!
+  _allTemplatesMeta(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: TemplateFilter): ListMetadata!
+  Story(id: Int!): Story!
+  allStories(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: StoryFilter): [Story!]!
+  _allStoriesMeta(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: StoryFilter): ListMetadata!
+  Pubkey(id: String!): Pubkey!
+  allPubkeys(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: PubkeyFilter): [Pubkey!]!
+  _allPubkeysMeta(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: PubkeyFilter): ListMetadata!
+  KycRequest(id: Int!): KycRequest!
+  allKycRequests(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: KycRequestFilter): [KycRequest!]!
+  _allKycRequestsMeta(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: KycRequestFilter): ListMetadata!
+  EmailAddress(id: Int!): EmailAddress!
+  allEmailAddresses(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: EmailAddressFilter): [EmailAddress!]!
+  _allEmailAddressesMeta(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: EmailAddressFilter): ListMetadata!
+  Attestation(id: Int!): Attestation!
+  allAttestations(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: AttestationFilter): [Attestation!]!
+  _allAttestationsMeta(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: AttestationFilter): ListMetadata!
+  Preview(id: Int!): Preview!
+  AccountState(id: Int!): AccountState!
+  EndorsementManifest(id: Int!): EndorsementManifest!
+  EmailAddressVerification(id: Int!): EmailAddressVerification!
+  InvoiceLink(id: String!): InvoiceLink!
+  DownloadProofLink(id: String!): DownloadProofLink!
+  Proof(id: String!): Proof!
+  IssuanceExport(id: Int!): IssuanceExport!
+  AttestationHtmlExport(id: Int!): AttestationHtmlExport!
+}
+
+input PubkeyFilter {
+  ids: [String!]
+  idLike: String
+}
+
+"An invoice ready to be paid"
+type Invoice {
+  amount: Int!
+  tokens: Int!
+  description: String!
+  url: String!
+}
+
+input TemplateFilter {
+  ids: [Int!]
+  idEq: Int
+  nameLike: String
+}
+
+"An AttestationInput has all parameters required to create an Attestation on several of documents."
+input AttestationInput {
+  "An array of SignedPayloads containing all the documents to attest. See the tutorial for more info on signing payloads." documents: [SignedPayload!]!
+  "An attestation allows appending documents up until a certain date. If you don't chose a date, no appending will be allowed." openUntil: DateTime
+  "Markers is a text that can be used for searching this attestation later. Markers cannot be updated after creation." markers: String
+  "A list of email addresses to notify when the documents are attested. Constata will email them an administrative access link to view, download or share the document certificate. You can pass an empty list if you want to omit Constata's emails, and manage distribution of the attestation in any other way." emailAdminLinkTo: [String!]!
+}
+
+"An entry on certos"
+type Entry {
+  id: Int!
+  requestId: Int!
+  requestName: String!
+  rowNumber: Int!
+  state: String!
+  createdAt: DateTime!
+  params: String!
+  errors: String
+  documentId: String
+  storyId: Int
+  hasEmailCallback: Boolean!
+  emailCallbackSentAt: DateTime
+  payload: String
+}
+
+"An request on certos"
+type KycRequest {
+  id: Int!
+  personId: Int!
+  orgId: Int!
+  createdAt: DateTime!
+  state: String!
+  name: String
+  lastName: String
+  idNumber: String
+  idType: String
+  birthdate: DateTime
+  nationality: String
+  country: String
+  jobTitle: String
+  legalEntityName: String
+  legalEntityCountry: String
+  legalEntityRegistration: String
+  legalEntityTaxId: String
+}
+
+input EmailAddressFilter {
+  ids: [Int!]
+  idEq: Int
+  addressEq: String
+  personIdEq: Int
+}
+
+"A CSV export of an Issuance"
+type IssuanceExport {
+  id: Int!
+  csv: String!
+}
+
+"Request Wizard Input"
+input WizardInput {
+  csv: String!
+  name: String!
+  templateId: Int
+  newKind: TemplateKind
+  newName: String
+  newLogoText: String
+  newLogoImage: String
+}
+
+"An email address"
+input EmailAddressInput {
+  address: String!
+  keepPrivate: Boolean!
+}
+
+input AttestationFilter {
+  ids: [Int!]
+  idEq: Int
+  orgIdEq: Int
+  personIdEq: Int
+  markersLike: String
+}
+
+"An AttestationInput has all parameters required to create an Attestation on several of documents."
+input SignedPayload {
+  payload: String!
+  signer: String!
+  signature: String!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
