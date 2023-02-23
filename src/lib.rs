@@ -4,6 +4,7 @@ use apollo_encoder::{
   Selection, SelectionSet, VariableDefinition, Type_, Value
 };
 use std::collections::HashMap;
+use convert_case::*;
 
 pub fn generate_all(input: &str) -> anyhow::Result<String> {
   generate_all_to_document(input).map(|x| x.to_string())
@@ -71,7 +72,7 @@ pub fn generate_all_to_document(input: &str) -> anyhow::Result<Document> {
         SelectionSet::with_selections(vec![Selection::Field(query_return)]),
       );
 
-      query_operation.name(Some(query_operation_name));
+      query_operation.name(Some(query_operation_name.to_case(Case::UpperCamel)));
 
       for var in query_variables {
         query_operation.variable_definition(var);

@@ -1,10 +1,10 @@
-mutation createSignup($input: SignupInput!) {
+mutation CreateSignup($input: SignupInput!) {
   createSignup(input: $input) {
     id
     __typename
   }
 }
-mutation createWizard($input: WizardInput!) {
+mutation CreateWizard($input: WizardInput!) {
   createWizard(input: $input) {
     id
     templateId
@@ -19,7 +19,7 @@ mutation createWizard($input: WizardInput!) {
     __typename
   }
 }
-mutation createAttestation($input: AttestationInput!) {
+mutation CreateAttestation($input: AttestationInput!) {
   createAttestation(input: $input) {
     id
     personId
@@ -44,7 +44,7 @@ mutation createAttestation($input: AttestationInput!) {
     __typename
   }
 }
-mutation signingIterator($id: Int!, $entryId: Int, $signature: String) {
+mutation SigningIterator($id: Int!, $entryId: Int, $signature: String) {
   signingIterator(id: $id, entryId: $entryId, signature: $signature) {
     id
     requestId
@@ -62,7 +62,7 @@ mutation signingIterator($id: Int!, $entryId: Int, $signature: String) {
     __typename
   }
 }
-mutation createKycRequest($input: KycRequestInput!) {
+mutation CreateKycRequest($input: KycRequestInput!) {
   createKycRequest(input: $input) {
     id
     personId
@@ -84,7 +84,7 @@ mutation createKycRequest($input: KycRequestInput!) {
     __typename
   }
 }
-mutation createEmailAddress($input: EmailAddressInput!) {
+mutation CreateEmailAddress($input: EmailAddressInput!) {
   createEmailAddress(input: $input) {
     id
     personId
@@ -94,7 +94,7 @@ mutation createEmailAddress($input: EmailAddressInput!) {
     __typename
   }
 }
-mutation createInvoiceLink($input: InvoiceLinkInput!) {
+mutation CreateInvoiceLink($input: InvoiceLinkInput!) {
   createInvoiceLink(input: $input) {
     id
     minimumSuggested
@@ -103,7 +103,7 @@ mutation createInvoiceLink($input: InvoiceLinkInput!) {
     __typename
   }
 }
-mutation updateDownloadProofLink($input: DownloadProofLinkInput!) {
+mutation UpdateDownloadProofLink($input: DownloadProofLinkInput!) {
   updateDownloadProofLink(input: $input) {
     id
     validUntil
@@ -115,7 +115,7 @@ mutation updateDownloadProofLink($input: DownloadProofLinkInput!) {
     __typename
   }
 }
-mutation deleteDownloadProofLink {
+mutation DeleteDownloadProofLink {
   deleteDownloadProofLink {
     id
     validUntil
@@ -127,13 +127,13 @@ mutation deleteDownloadProofLink {
     __typename
   }
 }
-mutation createEmailAddressVerification {
+mutation CreateEmailAddressVerification {
   createEmailAddressVerification {
     id
     __typename
   }
 }
-mutation updateRequest($id: Int!) {
+mutation UpdateRequest($id: Int!) {
   updateRequest(id: $id) {
     id
     templateId
@@ -166,7 +166,7 @@ query Entry($id: Int!) {
     __typename
   }
 }
-query allEntries($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EntryFilter) {
+query AllEntries($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EntryFilter) {
   allEntries(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     id
     requestId
@@ -184,7 +184,7 @@ query allEntries($page: Int, $perPage: Int, $sortField: String, $sortOrder: Stri
     __typename
   }
 }
-query _allEntriesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EntryFilter) {
+query AllEntriesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EntryFilter) {
   _allEntriesMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     count
     __typename
@@ -205,7 +205,7 @@ query Request($id: Int!) {
     __typename
   }
 }
-query allRequests($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: RequestFilter) {
+query AllRequests($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: RequestFilter) {
   allRequests(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     id
     templateId
@@ -220,7 +220,7 @@ query allRequests($page: Int, $perPage: Int, $sortField: String, $sortOrder: Str
     __typename
   }
 }
-query _allRequestsMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: RequestFilter) {
+query AllRequestsMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: RequestFilter) {
   _allRequestsMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     count
     __typename
@@ -237,7 +237,7 @@ query Template($id: Int!) {
     __typename
   }
 }
-query allTemplates($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: TemplateFilter) {
+query AllTemplates($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: TemplateFilter) {
   allTemplates(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     id
     name
@@ -248,7 +248,7 @@ query allTemplates($page: Int, $perPage: Int, $sortField: String, $sortOrder: St
     __typename
   }
 }
-query _allTemplatesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: TemplateFilter) {
+query AllTemplatesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: TemplateFilter) {
   _allTemplatesMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     count
     __typename
@@ -271,7 +271,7 @@ query Story($id: Int!) {
     __typename
   }
 }
-query allStories($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: StoryFilter) {
+query AllStories($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: StoryFilter) {
   allStories(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     id
     orgId
@@ -288,7 +288,7 @@ query allStories($page: Int, $perPage: Int, $sortField: String, $sortOrder: Stri
     __typename
   }
 }
-query _allStoriesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: StoryFilter) {
+query AllStoriesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: StoryFilter) {
   _allStoriesMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     count
     __typename
@@ -302,7 +302,7 @@ query Pubkey($id: String!) {
     __typename
   }
 }
-query allPubkeys($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: PubkeyFilter) {
+query AllPubkeys($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: PubkeyFilter) {
   allPubkeys(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     id
     personId
@@ -310,7 +310,7 @@ query allPubkeys($page: Int, $perPage: Int, $sortField: String, $sortOrder: Stri
     __typename
   }
 }
-query _allPubkeysMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: PubkeyFilter) {
+query AllPubkeysMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: PubkeyFilter) {
   _allPubkeysMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     count
     __typename
@@ -338,7 +338,7 @@ query KycRequest($id: Int!) {
     __typename
   }
 }
-query allKycRequests($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: KycRequestFilter) {
+query AllKycRequests($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: KycRequestFilter) {
   allKycRequests(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     id
     personId
@@ -360,7 +360,7 @@ query allKycRequests($page: Int, $perPage: Int, $sortField: String, $sortOrder: 
     __typename
   }
 }
-query _allKycRequestsMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: KycRequestFilter) {
+query AllKycRequestsMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: KycRequestFilter) {
   _allKycRequestsMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     count
     __typename
@@ -376,7 +376,7 @@ query EmailAddress($id: Int!) {
     __typename
   }
 }
-query allEmailAddresses($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EmailAddressFilter) {
+query AllEmailAddresses($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EmailAddressFilter) {
   allEmailAddresses(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     id
     personId
@@ -386,7 +386,7 @@ query allEmailAddresses($page: Int, $perPage: Int, $sortField: String, $sortOrde
     __typename
   }
 }
-query _allEmailAddressesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EmailAddressFilter) {
+query AllEmailAddressesMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: EmailAddressFilter) {
   _allEmailAddressesMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     count
     __typename
@@ -417,7 +417,7 @@ query Attestation($id: Int!) {
     __typename
   }
 }
-query allAttestations($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: AttestationFilter) {
+query AllAttestations($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: AttestationFilter) {
   allAttestations(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     id
     personId
@@ -442,7 +442,7 @@ query allAttestations($page: Int, $perPage: Int, $sortField: String, $sortOrder:
     __typename
   }
 }
-query _allAttestationsMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: AttestationFilter) {
+query AllAttestationsMeta($page: Int, $perPage: Int, $sortField: String, $sortOrder: String, $filter: AttestationFilter) {
   _allAttestationsMeta(page: $page, perPage: $perPage, sortField: $sortField, sortOrder: $sortOrder, filter: $filter) {
     count
     __typename
