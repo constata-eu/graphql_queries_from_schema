@@ -41,13 +41,18 @@ pub fn generate_all_to_document(input: &str) -> anyhow::Result<Document> {
       let Some(query_return_type_fields) = object_type_fields_lookup.get(&query_return_type) else { continue };
 
       let mut query_return = Field::new(query_operation_name.clone());
-      query_return.selection_set(Some(
-        SelectionSet::with_selections(
-          query_return_type_fields.iter()
-            .map(|s| Selection::Field(Field::new(s.to_string())) )
-            .collect()
-        )
-      ));
+
+      let mut selections = vec![];
+      for (top_level, maybe_nested) in query_return_type_fields {
+        let mut field = Field::new(top_level.to_string());
+        if let Some(nested) = maybe_nested {
+          field.selection_set(Some(SelectionSet::with_selections(
+            nested.iter().map(|f| Selection::Field(Field::new(f.to_string()))).collect()
+          )));
+        }
+        selections.push(Selection::Field(field));
+      }
+      query_return.selection_set(Some(SelectionSet::with_selections(selections)));
 
       let mut query_variables = vec![];
 
@@ -107,15 +112,41 @@ fn extract_typename(input: Type) -> Option<String> {
   }
 }
 
-fn object_type_fields_lookup(definitions: &[ObjectTypeDefinition]) -> HashMap<String, Vec<String>> {
-  let mut lookup = HashMap::new();
+/* This lookup matches an Object type to all its fields that we want to return.
+ * We generate 1 level of nested attributes for fields which are themselves of a known custom object type. */
+fn object_type_fields_lookup(definitions: &[ObjectTypeDefinition]) -> HashMap<String, Vec<(String, Option<Vec<String>>)>> {
+  let mut fields_for_type = HashMap::new();
   for object_type in definitions {
     let Some(type_name) = name_to_string(object_type.name()) else { continue };
     let Some(field_defs) = object_type.fields_definition().map(|x| x.field_definitions() ) else { continue };
-    let mut fieldnames: Vec<String> = field_defs.filter_map(|d| name_to_string(d.name()) ).collect();
-    fieldnames.push("__typename".to_string());
-    lookup.insert(type_name, fieldnames);
+    let mut fieldnames: Vec<(String, Option<Type>)> = field_defs.filter_map(|d|{
+      name_to_string(d.name()).map(|name| (name, d.ty()) )
+    }).collect();
+    fieldnames.push(("__typename".to_string(), None));
+    fields_for_type.insert(type_name, fieldnames);
   }
+
+  let mut lookup = HashMap::new();
+  for (object_name, fieldnames) in &fields_for_type {
+    let mut deep_fieldnames = vec![];
+    for (field, ty) in fieldnames {
+      let children = ty.clone().and_then(extract_typename)
+        .and_then(|name| fields_for_type.get(&name) )
+        .map(|fields|{
+          fields.iter().filter_map(|field|{
+            if field.1.clone().and_then(extract_typename).map(|x| !fields_for_type.contains_key(&x) ).unwrap_or(true) {
+              Some(field.0.clone())
+            } else {
+              None
+            }
+          }).collect()
+        });
+
+      deep_fieldnames.push((field.clone(), children));
+    }
+    lookup.insert(object_name.clone(), deep_fieldnames);
+  }
+  
   lookup
 }
 

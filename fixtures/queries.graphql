@@ -464,7 +464,13 @@ query AccountState($id: Int!) {
     maxMonthlyGift
     monthlyGiftRemainder
     parkedCount
-    invoices
+    invoices {
+      amount
+      tokens
+      description
+      url
+      __typename
+    }
     pendingTycUrl
     pendingInvoiceLinkUrl
     __typename
@@ -475,9 +481,33 @@ query EndorsementManifest($id: Int!) {
     id
     text
     websites
-    kyc
-    telegram
-    email
+    kyc {
+      name
+      lastName
+      idNumber
+      idType
+      birthdate
+      nationality
+      country
+      jobTitle
+      legalEntityName
+      legalEntityCountry
+      legalEntityRegistration
+      legalEntityTaxId
+      updatedAt
+      __typename
+    }
+    telegram {
+      username
+      firstName
+      lastName
+      __typename
+    }
+    email {
+      address
+      keepPrivate
+      __typename
+    }
     canSendEmail
     __typename
   }
@@ -526,7 +556,29 @@ query IssuanceExport($id: Int!) {
 query AttestationHtmlExport($id: Int!) {
   AttestationHtmlExport(id: $id) {
     id
-    attestation
+    attestation {
+      id
+      personId
+      orgId
+      markers
+      openUntil
+      state
+      parkingReason
+      doneDocuments
+      parkedDocuments
+      processingDocuments
+      totalDocuments
+      tokensCost
+      tokensPaid
+      tokensOwed
+      buyTokensUrl
+      acceptTycUrl
+      lastDocDate
+      emailAdminAccessUrlTo
+      adminAccessUrl
+      createdAt
+      __typename
+    }
     verifiableHtml
     __typename
   }
